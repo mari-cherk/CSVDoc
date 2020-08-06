@@ -1,4 +1,6 @@
 import java.io.FileReader;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.opencsv.CSVReader;
@@ -30,5 +32,39 @@ public class CSVDocRead {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void csvPrintingValue(String file, String text) {
+        // to get country code of Guyana from csv file
+        try (CSVReader reader = new CSVReader(new FileReader(file))) {
+            List<String[]> list = reader.readAll();
+            for (String[] line : list) {
+                if (line[0].equals(text)) {
+                    System.out.println(line[1] + "\t" + line[2]);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<String[]> csvExtractingValue(String file, String text) {
+        List<String[]> neededList = new ArrayList<String[]>();
+        // to get country code of Guyana from csv file
+        try (CSVReader reader = new CSVReader(new FileReader(file))) {
+            List<String[]> list = reader.readAll();
+            for (String[] line : list) {
+                if (line[1].equals(text)) {
+                    String[] newLine = new String[3];
+                    newLine[0] = line[0];
+                    newLine[1] = line[1];
+                    newLine[2] = line[2];
+                    neededList.add(newLine);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return neededList;
     }
 }
